@@ -4,9 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>
-                Welcome to the Admin HomePage
-            </h1>
+            @guest
+                <h1>You must be logged first!</h1>
+            @else
+                <h1>
+                    Welcome to the Admin HomePage
+                </h1>
+            @endguest
         </div>
     </div>
 </div>
