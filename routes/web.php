@@ -14,11 +14,9 @@ use  App\Http\Controllers\Admin\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('guest.welcome');
-});
 
 Auth::routes();
 
+Route::get('/', [App\Http\Controllers\Guest\HomeController::class, 'index'])->name('guest.home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin/home', [HomeController::class, 'index'])->name('admin.index');
