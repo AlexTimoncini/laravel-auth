@@ -29,6 +29,11 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'=> 'required|unique:projects|min:3|max:255',
+            'topic'=> 'required|unique:projects|min:3|max:255',
+            'gitHub'=> 'required|unique:projects|min:5|max:255'
+        ]);
         $data = $request->all();
 
         $newProject = new Project();
