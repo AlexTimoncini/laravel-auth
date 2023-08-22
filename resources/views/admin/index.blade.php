@@ -15,6 +15,7 @@
                     <th scope="col">Topic</th>
                     <th scope="col">Date</th>
                     <th scope="col">Git Hub</th>
+                    <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,11 @@
                         <td>{{ $project->topic }}</td>
                         <td>{{ $project->date }}</td>
                         <td class="text-primary">{{ $project->gitHub }}</td>
+                        <td>
+                            <a href="{{ route('projects.show', $project->id) }}" class="btn btn-primary">Show</a>
+                            <button class="btn btn-warning">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
