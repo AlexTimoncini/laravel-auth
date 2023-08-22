@@ -7,6 +7,7 @@
             @guest
                 <h1>You must be logged first!</h1>
             @else
+            <a href="{{ route('projects.create') }}" class="btn btn-primary">Add a new Project</a>
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
