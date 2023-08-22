@@ -10,6 +10,7 @@
                 <h1>
                     Welcome to the Admin HomePage
                 </h1>
+                <a href="{{ route('projects.index') }}" class="btn btn-primary">See Project List</a>
             @endguest
         </div>
     </div>
