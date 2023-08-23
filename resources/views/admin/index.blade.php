@@ -28,7 +28,7 @@
                         <td>{{ $project->date }}</td>
                         <td class="text-primary">{{ $project->gitHub }}</td>
                         <td>
-                            <a href="{{ route('projects.show', $project->id) }}" class="btn btn-primary">Show</a>
+                            <a href="{{ route('projects.show', $project) }}" class="btn btn-primary">Show</a>
                             <button class="btn btn-warning">Edit</button>
                             <button class="btn btn-danger">Delete</button>
                         </td>
