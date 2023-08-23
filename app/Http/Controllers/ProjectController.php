@@ -47,7 +47,7 @@ class ProjectController extends Controller
         $newProject->slug = Str::of("$newProject->id " . $data['title'])->slug('-');
         $newProject->save();
 
-        return redirect()->route('projects.show', $newProject->id);
+        return redirect()->route('projects.show', $newProject);
     }
 
     /**
