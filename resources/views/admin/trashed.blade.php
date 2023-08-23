@@ -8,7 +8,7 @@
                 <h1>You must be logged first!</h1>
             @else
             <a href="{{ route('projects.create') }}" class="btn btn-primary">Add a new Project</a>
-            <a href="{{ route('admin.trashed') }}" class="btn btn-danger">See deleted Projects</a>
+            <a href="{{ route('projects.index') }}" class="btn btn-primary">Back to list</a>
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
@@ -29,12 +29,18 @@
                         <td>{{ $project->date }}</td>
                         <td class="text-primary">{{ $project->gitHub }}</td>
                         <td class="d-flex flex-shrink-0">
-                            <a href="{{ route('projects.show', $project) }}" class="btn btn-primary">Show</a>
-                            <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning mx-2">Edit</a>
-                            <form action="{{ route('projects.destroy', $project) }}" method="POST">
+                        <form class="d-inline-block me-2" action="{{ route('projects.restore', $project) }}" method="POST">
+                                    @csrf
+
+                                    <button type="submit" class="btn btn-success me-2">
+                                        Restore
+                                    </button>
+                                </form>
+
+                            <form action="{{ route('projects.obliterate', $project) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Obliterate</button>
                             </form>
                         </td>
                     </tr>

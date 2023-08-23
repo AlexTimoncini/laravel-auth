@@ -100,4 +100,26 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('projects.index');
     }
+
+    public function trashed()
+    {
+        $projects = Project::onlyTrashed()->get();
+
+        return view('admin.trashed', compact('projects'));
+    }
+
+    public function restore($id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+        $project->restore();
+        return redirect()->route('projects.show', compact('project'));
+    }
+    
+    public function obliterate($id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+        $project->forceDelete();
+
+        return redirect()->route('admin.trashed');
+    }
 }
