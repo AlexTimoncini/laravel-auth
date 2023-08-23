@@ -27,9 +27,9 @@
                         <td>{{ $project->topic }}</td>
                         <td>{{ $project->date }}</td>
                         <td class="text-primary">{{ $project->gitHub }}</td>
-                        <td>
+                        <td class="d-flex flex-shrink-0">
                             <a href="{{ route('projects.show', $project) }}" class="btn btn-primary">Show</a>
-                            <button class="btn btn-warning">Edit</button>
+                            <button class="btn btn-warning mx-2">Edit</button>
                             <button class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
