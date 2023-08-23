@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -41,7 +42,11 @@ class ProjectController extends Controller
         $newProject->topic = $data['topic'];
         $newProject->date = date('y-m-d');
         $newProject->gitHub = $data['gitHub'];
+        $newProject->slug = '';
         $newProject->save();
+        $newProject->slug = Str::of("$newProject->id " . $data['title'])->slug('-');
+        $newProject->save();
+
         return redirect()->route('projects.show', $newProject->id);
     }
 
