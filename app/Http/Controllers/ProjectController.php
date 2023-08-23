@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -53,26 +54,42 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($slug);
         return view('admin.show', compact('project'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        //
+        return view('admin.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, String $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $data = $request->validate([
+            'title'=> ['required',Rule::unique('projects')->ignore($project->id),'min:3','max:255'],
+            'topic'=> ['required',Rule::unique('projects')->ignore($project->id),'min:3','max:255'],
+            'gitHub'=> ['required',Rule::unique('projects')->ignore($project->id),'min:5','max:255']
+        ]);
+        
+        $data = $request->all();
+
+        $project->title = $data['title'];
+        $project->topic = $data['topic'];
+        $project->date = date('y-m-d');
+        $project->gitHub = $data['gitHub'];
+        $project->slug = Str::of("$project->id " . $data['title'])->slug('-');
+        $project->save();
+
+        return redirect()->route('projects.show', compact('project'));
     }
 
     /**

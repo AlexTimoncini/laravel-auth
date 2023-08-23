@@ -29,7 +29,7 @@
                         <td class="text-primary">{{ $project->gitHub }}</td>
                         <td class="d-flex flex-shrink-0">
                             <a href="{{ route('projects.show', $project) }}" class="btn btn-primary">Show</a>
-                            <button class="btn btn-warning mx-2">Edit</button>
+                            <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning mx-2">Edit</a>
                             <button class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
