@@ -16,24 +16,27 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('projects.update', $project->id) }}" method="POST">
+                <form action="{{ route('projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="col">
+                        <div class="col-6">
                             <input type="text" class="form-control" placeholder="Title" name="title" value="{{ old( 'title', $project->title) }}">
                         </div>
-                        <div class="col">
+                        <div class="col-6">
                             <input type="text" class="form-control" placeholder="Topic" name="topic" value="{{ old( 'topic', $project->topic) }}">
                         </div>
-                        <div class="col input-group mb-3">
+                        <div class="col-12 input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">https://github</span>
                             </div>
                             <input type="text" class="form-control" name="gitHub" value="{{ old( 'gitHub', $project->gitHub) }}">
                         </div>
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary d-block">Save</button>
+                        <div class="col-8 mx-auto">
+                            <input type="file" name="image" id="image" class="form-control" placeholder="Upload your image" value="{{ old('image', '') }}">
+                        </div>
+                        <div class="col-7 mx-auto">
+                            <button type="submit" class="btn btn-primary d-block w-100 mt-2 mb-5">Save</button>
                         </div>
                     </div>
                 </form>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -34,9 +35,15 @@ class ProjectController extends Controller
         $request->validate([
             'title'=> 'required|unique:projects|min:3|max:255',
             'topic'=> 'required|unique:projects|min:3|max:255',
-            'gitHub'=> 'required|unique:projects|min:5|max:255'
+            'gitHub'=> 'required|unique:projects|min:5|max:255',
+            'image' => 'required|image'
         ]);
         $data = $request->all();
+
+        if ($request->hasFile('image')){
+            $img_path = Storage::put('uploads/projects', $request['image']);
+            $data['image'] = $img_path;
+        }
 
         $newProject = new Project();
         $newProject->title = $data['title'];
@@ -44,6 +51,7 @@ class ProjectController extends Controller
         $newProject->date = date('y-m-d');
         $newProject->gitHub = $data['gitHub'];
         $newProject->slug = '';
+        $newProject->image = $data['image'];
         $newProject->save();
         $newProject->slug = Str::of("$newProject->id " . $data['title'])->slug('-');
         $newProject->save();
@@ -77,16 +85,24 @@ class ProjectController extends Controller
         $data = $request->validate([
             'title'=> ['required',Rule::unique('projects')->ignore($project->id),'min:3','max:255'],
             'topic'=> ['required',Rule::unique('projects')->ignore($project->id),'min:3','max:255'],
-            'gitHub'=> ['required',Rule::unique('projects')->ignore($project->id),'min:5','max:255']
+            'gitHub'=> ['required',Rule::unique('projects')->ignore($project->id),'min:5','max:255'],
+            'image' => ['image']
         ]);
         
         $data = $request->all();
+
+        if ($request->hasFile('image')){
+            Storage::delete($project->image);
+            $img_path = Storage::put('uploads/projects', $request['image']);
+            $data['image'] = $img_path;
+        }
 
         $project->title = $data['title'];
         $project->topic = $data['topic'];
         $project->date = date('y-m-d');
         $project->gitHub = $data['gitHub'];
         $project->slug = Str::of("$project->id " . $data['title'])->slug('-');
+        $project->image = $data['image'];
         $project->save();
 
         return redirect()->route('projects.show', compact('project'));
@@ -118,6 +134,7 @@ class ProjectController extends Controller
     public function obliterate($id)
     {
         $project = Project::onlyTrashed()->findOrFail($id);
+        Storage::delete($project->image);
         $project->forceDelete();
 
         return redirect()->route('admin.trashed');
