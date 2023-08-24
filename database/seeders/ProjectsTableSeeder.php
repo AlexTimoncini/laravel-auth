@@ -21,6 +21,7 @@ class ProjectsTableSeeder extends Seeder
             $newProject->topic = $faker->sentence(2);
             $newProject->date = $faker->date();
             $newProject->gitHub = $faker->url();
+            $newProject->image = $faker->imageUrl(640, 480, 'animals', true);
             $newProject->slug = '';
             $newProject->save();
             $newProject->slug = Str::of("$newProject->id " . $newProject->title)->slug('-');
