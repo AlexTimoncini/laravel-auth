@@ -20,16 +20,16 @@
                     @csrf
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Title" name="title">
+                            <input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title', '') }}">
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Topic" name="topic">
+                            <input type="text" class="form-control" placeholder="Topic" name="topic" value="{{ old('topic', '') }}">
                         </div>
                         <div class="col input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">https://github</span>
                             </div>
-                            <input type="text" class="form-control" name="gitHub">
+                            <input type="text" class="form-control" name="gitHub" value="{{ old('gitHub', '') }}">
                         </div>
                         <div class="col">
                             <button type="submit" class="btn btn-primary d-block">Save</button>
