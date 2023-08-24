@@ -20,8 +20,11 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\Guest\HomeController::class, 'index'])->name('guest.home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin/home', [HomeController::class, 'index'])->name('admin.index');
-Route::get('/admin/trashed', [ProjectController::class, 'trashed'])->name('admin.trashed');
-Route::post('/admin/restore/{project}', [ProjectController::class, 'restore'])->name('projects.restore');
-Route::delete('/admin/obliterate/{project}', [ProjectController::class, 'obliterate'])->name('projects.obliterate');
-Route::resource('projects', ProjectController::class);
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('admin.index');
+    Route::get('/trashed', [ProjectController::class, 'trashed'])->name('admin.trashed');
+    Route::post('/restore/{project}', [ProjectController::class, 'restore'])->name('projects.restore');
+    Route::delete('/obliterate/{project}', [ProjectController::class, 'obliterate'])->name('projects.obliterate');
+    Route::resource('/projects', ProjectController::class);
+});
